@@ -1,3 +1,5 @@
+// BookList deve gestire i libri selezionati. Riuscire a capire quale sia selezionato e passare l'asin del libro selezionato a CommentArea, in modo che quest'ultimo possa fare la fetch dei commenti relativi a quel libro ed in caso di un libro selezionato alla seleziona di un altro libro, aggiornare i commenti mostrati da CommentArea e deselezionare il libro precedente (quindi togliere il bordo rosso)
+
 import { Component } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 import SingleBook from './SingleBook'
@@ -11,10 +13,9 @@ class BookList extends Component {
     bookAsin: null,
   }
 
-
   setAsin = (asin) => {
     this.setState({ bookAsin: asin })
-    console.log("asin da booklist: " + this.statebookAsin)
+    console.log("asin da booklist: " + this.state.bookAsin)
   }
 
   componentDidUpdate(prevProps, prevState) {

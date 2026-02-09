@@ -40,7 +40,7 @@ class CommentArea extends Component {
     }
   }
 
-  componentDidUpdate = async (prevprops, prevstate) => {
+  componentDidUpdate = async (prevprops) => {
     if (prevprops.selAsin !== this.props.selAsin) {
       try {
         let response = await fetch(
