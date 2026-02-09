@@ -1,0 +1,54 @@
+import { Component } from 'react'
+import CommentList from './CommentList'
+import AddComment from './AddComment'
+import Loading from './Loading'
+import Error from './Error'
+
+const fetchURL = 'https://striveschool-api.herokuapp.com/api/comments/';
+const apiKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTg5ZjQwNjI4NzNjYjAwMTUwZjAyOGUiLCJpYXQiOjE3NzA2NDg1ODIsImV4cCI6MTc3MTg1ODE4Mn0.D5dky5M1nKuPXMU_tVqd1_J9iM8i-8xcNDi_1hq-9XA'
+
+
+class CommentArea extends Component {
+  state = {
+    comments: [],
+    isLoading: true,
+    isError: false,
+  }
+
+  componentDidMount = async () => {
+    try {
+      let response = await fetch(
+        fetchURL +
+        this.props.selAsin,
+        {
+          headers: {
+            Authorization: 'Bearer ' + apiKEY,
+          },
+        }
+      )
+      console.log(response)
+      if (response.ok) {
+        let comments = await response.json()
+        this.setState({ comments: comments, isLoading: false, isError: false })
+      } else {
+        this.setState({ isLoading: false, isError: true })
+      }
+    } catch (error) {
+      console.log(error)
+      this.setState({ isLoading: false, isError: true })
+    }
+  }
+
+  render() {
+    return (
+      <div className="text-center">
+        {this.state.isLoading && <Loading />}
+        {this.state.isError && <Error />}
+        <AddComment asin={this.props.asin} />
+        <CommentList commentsToShow={this.state.comments} />
+      </div>
+    )
+  }
+}
+
+export default CommentArea
