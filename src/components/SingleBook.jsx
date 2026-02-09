@@ -14,7 +14,7 @@ class SingleBook extends Component {
           onClick={() => {
             this.setState({ selected: !this.state.selected })
             if (!this.state.selected) {
-              this.props.Asin(this.props.book.asin)
+              this.props.setAsin(this.props.book.asin)
               console.log("asin selezionato: " + this.props.book.asin)
             }
           }}

@@ -3,6 +3,8 @@ import { Col, Form, Row } from 'react-bootstrap'
 import SingleBook from './SingleBook'
 import CommentArea from './CommentArea'
 
+let newAsin = null
+
 class BookList extends Component {
   state = {
     searchQuery: '',
@@ -15,6 +17,12 @@ class BookList extends Component {
     console.log("asin da booklist: " + this.statebookAsin)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.bookAsin !== this.state.bookAsin) {
+      console.log("asin aggiornato: " + this.state.bookAsin)
+      newAsin = this.state.bookAsin
+    }
+  }
 
   render() {
     return (
@@ -39,12 +47,15 @@ class BookList extends Component {
               )
               .map((b) => (
                 <Col xs={12} md={6} key={b.asin}>
-                  <SingleBook Asin={this.setAsin} book={b} />
+                  <SingleBook
+                    setAsin={this.setAsin}
+
+                    book={b} />
                 </Col>
               ))}
           </Col>
           <Col xs={12} md={6}>
-            <CommentArea selAsin={this.state.bookAsin} />
+            <CommentArea selAsin={newAsin} />
           </Col>
         </Row >
       </>
